@@ -1,0 +1,29 @@
+.container {
+    padding: 0;
+    margin: 20px auto;
+}
+
+.main-button-outer {
+    width: 100%;
+    text-align: center;
+}
+
+.outer {
+    height: 100vh;
+}
+
+.outer .col-md-4 {
+    padding: 0;
+}
+
+.todo-section {
+    height: 100%;
+    margin: 10px;
+    border: 2px solid black;
+}
+
+.todo-section .display-4 {
+    padding: 5px 0;
+    text-align: center;
+    background-color: bisque;
+}
