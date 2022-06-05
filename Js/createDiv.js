@@ -1,5 +1,24 @@
 const toDoBlock = document.getElementById('to-do-block');
 
+let idCount = 1;
+
+const todoDragStart = (event) => {
+    let todoCardIDBeingDragged = event.target.id;
+    event.dataTransfer.setData('todoCard', todoCardIDBeingDragged);
+}
+
+const allowDrop = (event) => {
+    event.preventDefault();
+}
+
+const todoDrop = (event) => {
+    let todoCardIDBeingDragged = event.dataTransfer.getData('todoCard')
+    let todoCardBeingDragged = document.getElementById(todoCardIDBeingDragged)
+    let parentElement = event.target;
+    parentElement.appendChild(todoCardBeingDragged)
+}
+
+
 const createToDoDiv = (taskInput, priorityInput, todoDeadline) => {
 
     const toDoCardDiv = document.createElement('div')
@@ -10,6 +29,7 @@ const createToDoDiv = (taskInput, priorityInput, todoDeadline) => {
     const cardTitleH5 = document.createElement('h5')
     const deleteBtn = document.createElement('a')
 
+    toDoCardDiv.id = `todo-${idCount}`;
 
     toDoCardDiv.classList = 'card todo-card';
     cardHeaderDiv.classList = 'card-header';
@@ -34,6 +54,12 @@ const createToDoDiv = (taskInput, priorityInput, todoDeadline) => {
             break;
     }
 
+
+
+    toDoCardDiv.draggable = 'true';
+    toDoCardDiv.addEventListener('dragstart', todoDragStart)
+    deleteBtn.addEventListener('click', () => toDoCardDiv.style.display = 'none')
+
     toDoBlock.appendChild(toDoCardDiv);
     toDoCardDiv.appendChild(cardHeaderDiv);
     cardHeaderDiv.appendChild(priorityDisplaySpan);
@@ -42,14 +68,14 @@ const createToDoDiv = (taskInput, priorityInput, todoDeadline) => {
     cardBodyDiv.appendChild(cardTitleH5);
     cardBodyDiv.appendChild(deleteBtn);
 
-    // <div class="card todo-card">
-    //     <div class="card-header">
-    //         <span class="badge rounded-pill bg-warning text-dark">Medium Priority</span>
-    //         <span class="badge rounded-pill bg-warning text-dark">2022-05-26 03:00 PM</span>
-    //     </div>
+    // <div class="card todo-card" id="test-id" draggable="true" ondragstart="todoDragStart(event)" >
+    //     <div class="card-header"><span class="badge rounded-pill bg-danger">high
+    //         Priority</span><span>June 16, 2022, 11:50:00 PM</span></div>
     //     <div class="card-body">
-    //         <h5 class="card-title">Complete revision of async await</h5>
-    //         <a href="#" class="btn btn-sm btn-danger">Delete</a>
+    //         <h5 class="card-title">Complete version 2 this project</h5><a
+    //             class="btn btn-sm btn-danger">Delete</a>
     //     </div>
     // </div>
+
+    idCount++;
 }
